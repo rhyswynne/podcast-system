@@ -80,6 +80,19 @@ function soundpress_add_track_details_to_post( $post_id, $post, $update ) {
 				wp_update_post( $postcontentarray );
 			}
 
+			// Get The Duration
+			$durationseconds = $track_details->duration / 1000;
+
+			update_post_meta( $post_id, 'podcast_duration', esc_attr( $durationseconds ) );
+
+			if ( TRUE == $track_details->downloadable ) {
+
+				$download_url = esc_attr( $track_details->download_url );
+
+				update_post_meta( $post_id, 'podcast_download_url', $download_url );
+
+			}
+
 		}
 
 	}
