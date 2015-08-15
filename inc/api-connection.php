@@ -25,6 +25,8 @@ function soundpress_add_track_details_to_post( $post_id, $post, $update ) {
 
 		if ( is_object( $track_details ) ) {
 
+			//wp_die( print_r( $track_details ) );
+
 			// Check for thumbnail. If not present, get the board Image
 			if ( !has_post_thumbnail( $post_id ) ) {
 
