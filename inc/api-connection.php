@@ -1,8 +1,5 @@
 <?php
 
-
-define( 'CLIENT_ID', '603647fd1bed7658d61538e8d66293e8' );
-define( 'CLIENT_SECRET', '7fc36c961b2053215488a6ec2e2979b3' );
 define( 'TEST_TRACK', 'https://soundcloud.com/thenextweb/testing-rapmic-for-ios' );
 define( 'POST_TYPE', 'post' );
 
@@ -27,8 +24,6 @@ function soundpress_add_track_details_to_post( $post_id, $post, $update ) {
 		$track_details = soundcloud_remote_get( $trackurl );
 
 		if ( is_object( $track_details ) ) {
-
-			//wp_die( print_r( $track_details ) );
 
 			// Check for thumbnail. If not present, get the board Image
 			if ( !has_post_thumbnail( $post_id ) ) {
@@ -108,9 +103,10 @@ add_action( 'save_post_' . POST_TYPE, 'soundpress_add_track_details_to_post', 10
  */
 function soundcloud_remote_get( $trackurl ) {
 
-
-	$trackname 		= soundcloud_get_track_name( $trackurl );
-	$apiurl			= 'http://api.soundcloud.com/tracks/' . $trackname . '?client_id=' . CLIENT_ID;
+	$soundpress_options = get_option( 'soundpress_option_name' );
+	$client_id 			= $soundpress_options['soundcloud_oauth_client_id_0'];
+	$trackname 			= soundcloud_get_track_name( $trackurl );
+	$apiurl				= 'http://api.soundcloud.com/tracks/' . $trackname . '?client_id=' . $client_id;
 
 	$response = wp_remote_get( $apiurl );
 
