@@ -120,6 +120,28 @@ function soundpress_save_url_meta( $post_id, $post ) {
 		delete_post_meta( $post_id, $meta_key, $meta_value );
 }
 
+/* Filter the post class hook with our custom post class function. */
+add_filter( 'post_class', 'soundpress_soundcloud_url' );
+
+function soundpress_soundcloud_url( $classes ) {
+
+	/* Get the current post ID. */
+	$post_id = get_the_ID();
+
+	/* If we have a post ID, proceed. */
+	if ( !empty( $post_id ) ) {
+
+		/* Get the custom post class. */
+		$post_class = get_post_meta( $post_id, 'soundpress_soundcloud_url', true );
+
+		/* If a post class was input, sanitize it and add it to the post class array. */
+		if ( !empty( $post_class ) )
+			$classes[] = sanitize_html_class( $post_class );
+	}
+
+	return $classes;
+}
+
 function soundpress_add_oembed( $content ) {
 	if (is_singular('podcast'))
 	{
