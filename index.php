@@ -33,6 +33,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 define('PODCASTSYSTEM_PLUGIN_PATH',dirname(__FILE__));
 define('PODCASTSYSTEM_PLUGIN_URL',plugins_url('', __FILE__));
+define( 'PODCASTSYSTEM_POST_TYPE', 'podcast' );
+
 
 require_once PODCASTSYSTEM_PLUGIN_PATH . '/inc/core.php';
 

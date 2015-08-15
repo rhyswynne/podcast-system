@@ -56,7 +56,7 @@ function soundpress_meta_boxes_setup() {
 	/* Add meta boxes on the 'add_meta_boxes' hook. */
 	add_action( 'add_meta_boxes', 'soundpress_add_soundcloud_meta_boxes' );
 	/* Save post meta on the save_post hook */
-	add_action( 'save_post', 'soundpress_save_class_meta', 10, 2 );
+	add_action( 'save_post', 'soundpress_save_url_meta', 10, 2 );
 }
 
 /* Create one or more meta boxes to be displayed on the post editor screen. */
@@ -80,12 +80,12 @@ function soundpress_soundcloud_meta_box( $object, $box ) { ?>
 <p>
 	<label for="soundpress_url"><?php _e( "Add the link to the audio hosted on Soundcloud", 'example' ); ?></label>
 	<br />
-	<input class="widefat" type="text" name="soundpress_url" id="soundpress_url" value="<?php echo esc_attr( get_post_meta( $object->ID, 'soundpress_soundcloud_class', true ) ); ?>" size="30" />
+	<input class="widefat" type="text" name="soundpress_url" id="soundpress_url" value="<?php echo esc_attr( get_post_meta( $object->ID, 'soundpress_soundcloud_url', true ) ); ?>" size="30" />
 </p>
 <?php }
 
 /* Save the meta box's post metadata. */
-function soundpress_save_class_meta( $post_id, $post ) {
+function soundpress_save_url_meta( $post_id, $post ) {
 
 	/* Verify the nonce before proceeding. */
 	if ( !isset( $_POST['soundpress_url_nonce'] ) || !wp_verify_nonce( $_POST['soundpress_url_nonce'], basename( __FILE__ ) ) )
@@ -102,7 +102,7 @@ function soundpress_save_class_meta( $post_id, $post ) {
 	$new_meta_value = ( isset( $_POST['soundpress_url'] ) ? esc_url( $_POST['soundpress_url'] ) : '' );
 
 	/* Get the meta key. */
-	$meta_key = 'soundpress_soundcloud_class';
+	$meta_key = 'soundpress_soundcloud_url';
 
 	/* Get the meta value of the custom field key. */
 	$meta_value = get_post_meta( $post_id, $meta_key, true );
@@ -120,32 +120,10 @@ function soundpress_save_class_meta( $post_id, $post ) {
 		delete_post_meta( $post_id, $meta_key, $meta_value );
 }
 
-/* Filter the post class hook with our custom post class function. */
-add_filter( 'post_class', 'soundpress_soundcloud_class' );
-
-function soundpress_soundcloud_class( $classes ) {
-
-	/* Get the current post ID. */
-	$post_id = get_the_ID();
-
-	/* If we have a post ID, proceed. */
-	if ( !empty( $post_id ) ) {
-
-		/* Get the custom post class. */
-		$post_class = get_post_meta( $post_id, 'soundpress_soundcloud_class', true );
-
-		/* If a post class was input, sanitize it and add it to the post class array. */
-		if ( !empty( $post_class ) )
-			$classes[] = sanitize_html_class( $post_class );
-	}
-
-	return $classes;
-}
-
 function soundpress_add_oembed( $content ) {
 	if (is_singular('podcast'))
 	{
-		$url = get_post_meta(get_the_ID(), 'soundpress_soundcloud_class', true);
+		$url = get_post_meta(get_the_ID(), 'soundpress_soundcloud_url', true);
 		$embed_code = '<div class="soundpress-embedded">'. wp_oembed_get($url) . '</div>';
 		$content.= $embed_code;
 	}

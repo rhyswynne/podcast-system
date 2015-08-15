@@ -1,9 +1,5 @@
 <?php
 
-define( 'TEST_TRACK', 'https://soundcloud.com/thenextweb/testing-rapmic-for-ios' );
-define( 'POST_TYPE', 'post' );
-
-
 /**
  * Add track details when a post is saved.
  *
@@ -13,7 +9,7 @@ define( 'POST_TYPE', 'post' );
  */
 function soundpress_add_track_details_to_post( $post_id, $post, $update ) {
 
-	$trackurl = TEST_TRACK;
+	$trackurl = get_post_meta( $post_id, 'soundpress_soundcloud_url', true );
 
 	if ( wp_is_post_revision( $post_id ) ) {
 		return;
@@ -95,7 +91,7 @@ function soundpress_add_track_details_to_post( $post_id, $post, $update ) {
 	}
 	
 }
-add_action( 'save_post_' . POST_TYPE, 'soundpress_add_track_details_to_post', 10, 3 );
+add_action( 'save_post_' . PODCASTSYSTEM_POST_TYPE, 'soundpress_add_track_details_to_post', 10, 3 );
 
 /**
  * Connect to a Soundcloud URL and then pull in details.
