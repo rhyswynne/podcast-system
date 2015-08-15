@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  *  SoundPress Custom Post Type
  */
@@ -26,7 +26,7 @@ function soundpress_podcast() {
 		'label'               => __( 'SoundPress', 'text_domain' ),
 		'description'         => __( 'SoundPress CPT', 'text_domain' ),
 		'labels'              => $labels,
-		'supports'            => array('title', 'editor'),
+		'supports'						=> array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
 		'taxonomies'          => array( 'category', 'post_tag' ),
 		'hierarchical'        => false,
 		'public'              => true,
@@ -36,7 +36,7 @@ function soundpress_podcast() {
 		'show_in_admin_bar'   => true,
 		'show_in_nav_menus'   => true,
 		'can_export'          => true,
-		'has_archive'         => true,		
+		'has_archive'         => true,
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
 		'capability_type'     => 'page',
