@@ -10,7 +10,7 @@
 function soundpress_add_track_details_to_post( $post_id, $post, $update ) {
 
 	$trackurl = get_post_meta( $post_id, 'soundpress_soundcloud_url', true );
-
+	
 	if ( wp_is_post_revision( $post_id ) ) {
 		return;
 	}
@@ -18,15 +18,17 @@ function soundpress_add_track_details_to_post( $post_id, $post, $update ) {
 	if ( $trackurl ) {
 
 		$track_details = soundcloud_remote_get( $trackurl );
-
+				
 		if ( is_object( $track_details ) ) {
-
-			//wp_die( print_r( $track_details ) );
 
 			// Check for thumbnail. If not present, get the board Image
 			if ( !has_post_thumbnail( $post_id ) ) {
 
 				$thumbnailurl = $track_details->artwork_url;
+
+				if ( empty( $thumbnailurl ) ) {
+					$thumbnailurl = $track_details->user->avatar_url;
+				}
 
 				$tmp = download_url( $thumbnailurl );
 				
