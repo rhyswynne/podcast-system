@@ -28,11 +28,13 @@ function soundpress_add_track_details_to_post( $post_id, $post, $update ) {
 
 		if ( is_object( $track_details ) ) {
 
+			//wp_die( print_r( $track_details ) );
+
 			// Check for thumbnail. If not present, get the board Image
 			if ( !has_post_thumbnail( $post_id ) ) {
 
 				$thumbnailurl = $track_details->artwork_url;
-				
+
 				$tmp = download_url( $thumbnailurl );
 				
 				if( is_wp_error( $tmp ) ){
@@ -65,6 +67,17 @@ function soundpress_add_track_details_to_post( $post_id, $post, $update ) {
 
 				set_post_thumbnail( $post_id, $id );
 
+			}
+
+			// Check for Description
+			if ( "" == get_the_content() ) {
+				$postcontentarray = array(
+					'ID'           => $post_id,
+					'post_content' => $track_details->description,
+					);
+
+				// Update the post into the database
+				wp_update_post( $postcontentarray );
 			}
 
 		}
