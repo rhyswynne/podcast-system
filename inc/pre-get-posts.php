@@ -10,6 +10,8 @@ function soundpress_include_post_types( $query ) {
  		$query->set('post_type', 'podcast' );
  	}
 
+ 	return;
+
 }
 
 add_action( 'pre_get_posts', 'soundpress_include_post_types' )
