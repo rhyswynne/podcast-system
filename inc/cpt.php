@@ -80,7 +80,7 @@ function soundpress_soundcloud_meta_box( $object, $box ) { ?>
 <p>
 	<label for="soundpress_url"><?php _e( "Add the link to the audio hosted on Soundcloud", 'example' ); ?></label>
 	<br />
-	<input class="widefat" type="text" name="soundpress_url" id="soundpress_url" value="<?php echo esc_attr( get_post_meta( $object->ID, 'soundpress_soundcloud_class', true ) ); ?>" size="30" />
+	<input class="widefat" type="text" name="soundpress_url" id="soundpress_url" value="<?php echo esc_attr( get_post_meta( $object->ID, 'soundpress_soundcloud_url', true ) ); ?>" size="30" />
 </p>
 <?php }
 
@@ -102,7 +102,7 @@ function soundpress_save_class_meta( $post_id, $post ) {
 	$new_meta_value = ( isset( $_POST['soundpress_url'] ) ? esc_url( $_POST['soundpress_url'] ) : '' );
 
 	/* Get the meta key. */
-	$meta_key = 'soundpress_soundcloud_class';
+	$meta_key = 'soundpress_soundcloud_url';
 
 	/* Get the meta value of the custom field key. */
 	$meta_value = get_post_meta( $post_id, $meta_key, true );
@@ -121,9 +121,9 @@ function soundpress_save_class_meta( $post_id, $post ) {
 }
 
 /* Filter the post class hook with our custom post class function. */
-add_filter( 'post_class', 'soundpress_soundcloud_class' );
+add_filter( 'post_class', 'soundpress_soundcloud_url' );
 
-function soundpress_soundcloud_class( $classes ) {
+function soundpress_soundcloud_url( $classes ) {
 
 	/* Get the current post ID. */
 	$post_id = get_the_ID();
@@ -132,7 +132,7 @@ function soundpress_soundcloud_class( $classes ) {
 	if ( !empty( $post_id ) ) {
 
 		/* Get the custom post class. */
-		$post_class = get_post_meta( $post_id, 'soundpress_soundcloud_class', true );
+		$post_class = get_post_meta( $post_id, 'soundpress_soundcloud_url', true );
 
 		/* If a post class was input, sanitize it and add it to the post class array. */
 		if ( !empty( $post_class ) )
@@ -145,7 +145,7 @@ function soundpress_soundcloud_class( $classes ) {
 function soundpress_add_oembed( $content ) {
 	if (is_singular('podcast'))
 	{
-		$url = get_post_meta(get_the_ID(), 'soundpress_soundcloud_class', true);
+		$url = get_post_meta(get_the_ID(), 'soundpress_soundcloud_url', true);
 		$embed_code = '<div class="soundpress-embedded">'. wp_oembed_get($url) . '</div>';
 		$content.= $embed_code;
 	}
