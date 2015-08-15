@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  *  SoundPress Custom Post Type
  */
@@ -36,7 +36,7 @@ function soundpress_podcast() {
 		'show_in_admin_bar'   => true,
 		'show_in_nav_menus'   => true,
 		'can_export'          => true,
-		'has_archive'         => true,		
+		'has_archive'         => true,
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
 		'capability_type'     => 'page',
@@ -56,7 +56,7 @@ function soundpress_meta_boxes_setup() {
 	/* Add meta boxes on the 'add_meta_boxes' hook. */
 	add_action( 'add_meta_boxes', 'soundpress_add_soundcloud_meta_boxes' );
 	/* Save post meta on the save_post hook */
-	add_action( 'save_post', 'soundpress_save_url_meta', 10, 2 );
+	add_action( 'save_post', 'soundpress_save_class_meta', 10, 2 );
 }
 
 /* Create one or more meta boxes to be displayed on the post editor screen. */
@@ -85,7 +85,7 @@ function soundpress_soundcloud_meta_box( $object, $box ) { ?>
 <?php }
 
 /* Save the meta box's post metadata. */
-function soundpress_save_url_meta( $post_id, $post ) {
+function soundpress_save_class_meta( $post_id, $post ) {
 
 	/* Verify the nonce before proceeding. */
 	if ( !isset( $_POST['soundpress_url_nonce'] ) || !wp_verify_nonce( $_POST['soundpress_url_nonce'], basename( __FILE__ ) ) )
