@@ -4,7 +4,7 @@
  * @version 
  */
 /*
-Plugin Name: Podcast System Plugin
+Plugin Name: SoundPress
 Plugin URI: 
 Description: System for handling the Plugin System
 Version: 0.1
