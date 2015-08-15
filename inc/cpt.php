@@ -143,7 +143,10 @@ function soundpress_soundcloud_class( $classes ) {
 }
 
 function soundpress_add_oembed( $content ) {
-	if (is_singular('podcast'))
+	$soundpress_options = get_option( 'soundpress_option_name' ); // Array of All Options
+	$append_oembed_2 = $soundpress_options['append_oembed_2']; // Append oembed
+
+	if (is_singular('podcast') && $append_oembed_2 == true)
 	{
 		$url = get_post_meta(get_the_ID(), 'soundpress_soundcloud_class', true);
 		$embed_code = '<div class="soundpress-embedded">'. wp_oembed_get($url) . '</div>';
