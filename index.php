@@ -1,18 +1,18 @@
 <?php
 /**
- * @package 
- * @version 
+ * @package
+ * @version
  */
 /*
 Plugin Name: SoundPress
-Plugin URI: 
+Plugin URI:
 Description: System for handling the Plugin System
 Version: 0.1
 Author: WP Sheffield Hackday
-Author URI: 
+Author URI:
 Tags:
 License: GPLv2 or later
-Text Domain: 
+Text Domain:
 */
 
 /*
